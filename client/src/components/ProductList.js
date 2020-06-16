@@ -1,13 +1,13 @@
 import React from "react";
 import Product from "./Product.js";
 
-const ProductList = ({ products }) => {
+const ProductList = ({ onDelete, products }) => {
   return (
     <div className="product-listing">
       <h2>Products</h2>
 
       {products.map((product) => {
-        return <Product key={product.id} {...product} />;
+        return <Product onDelete={onDelete} key={product._id} {...product} />;
       })}
     </div>
   );

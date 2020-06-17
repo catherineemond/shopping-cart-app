@@ -13,6 +13,10 @@ class Product extends React.Component {
     this.props.onDelete(this.props._id);
   };
 
+  handleAddToCart = () => {
+    this.props.onAddToCart(this.props._id);
+  };
+
   render() {
     return (
       <div className="product">
@@ -20,13 +24,22 @@ class Product extends React.Component {
           <h3>{this.props.title}</h3>
           <p className="price">{this.props.price}</p>
           <p className="quantity">{this.props.quantity} left in stock</p>
+
+          {/* TODO clicking 'edit' button shows the form and hides these two buttons */}
           <div className="actions product-actions">
-            {/* TODO clicking 'edit' button shows the form and hides these two buttons */}
-            <a className="button add-to-cart">Add to Cart</a>
+            <a
+              className={`button add-to-cart ${
+                this.props.quantity ? null : "disabled"
+              }`}
+              onClick={this.handleAddToCart}
+            >
+              Add to Cart
+            </a>
             <a className="button edit" onClick={this.showForm}>
               Edit
             </a>
           </div>
+
           <a className="delete-button" onClick={this.handleDelete}>
             <span>X</span>
           </a>
@@ -38,7 +51,7 @@ class Product extends React.Component {
           <h3>Edit Product</h3>
 
           <Form
-            onSubmit={this.props.onEditProduct}
+            onSubmit={this.props.onEdit}
             type={"Update"}
             // DONE pass in current Product values
             {...this.props}

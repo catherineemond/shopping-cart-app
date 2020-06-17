@@ -10,7 +10,7 @@ class AddForm extends React.Component {
       <div className="add-form visible">
         {/* TODO onClick property on the button to hide/show form */}
         <p>
-          <a class="button add-product-button">Add A Product</a>
+          <a className="button add-product-button">Add A Product</a>
         </p>
         <h3>Add Product</h3>
         <Form onSubmit={this.props.onAddProduct} type={"Add"} />

@@ -21,7 +21,15 @@ class Form extends React.Component {
 
     // TODO pass in 'props.type' to generic 'onSubmit' method
     // and push logic up to App.js
-    this.props.onSubmit(this.state, this.props.type);
+
+    this.props.onSubmit(
+      {
+        title: this.state.title,
+        price: this.state.price,
+        quantity: this.state.quantity,
+      },
+      this.props._id
+    );
 
     this.setState({
       title: "",

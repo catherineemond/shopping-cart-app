@@ -15,6 +15,12 @@ class Form extends React.Component {
     });
   };
 
+  handleCancel = (event) => {
+    event.preventDefault();
+    this.reset();
+    this.props.onCancel();
+  };
+
   reset = () => {
     this.setState({
       title: "",
@@ -70,6 +76,8 @@ class Form extends React.Component {
     } else if (this.props.type === "Update") {
       this.handleEdit(data);
     }
+
+    this.props.hideForm();
   };
 
   render() {
@@ -112,7 +120,9 @@ class Form extends React.Component {
           <a className="button" onClick={this.handleSubmit}>
             {this.props.type === "Add" ? "Add" : "Update"}
           </a>
-          <a className="button">Cancel</a>
+          <a className="button" onClick={this.handleCancel}>
+            Cancel
+          </a>
         </div>
       </form>
     );

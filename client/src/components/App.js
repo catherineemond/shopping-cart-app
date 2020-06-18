@@ -13,7 +13,9 @@ class App extends React.Component {
         </header>
         <main>
           <ProductList />
-          <AddForm isOpen={true} />
+          <AddForm
+          // isOpen={false}
+          />
         </main>
       </div>
     );

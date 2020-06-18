@@ -8,6 +8,14 @@ class Product extends React.Component {
     editFormOpen: false,
   };
 
+  hideForm = () => {
+    this.setState({ editFormOpen: false });
+  };
+
+  handleCancel = () => {
+    this.hideForm();
+  };
+
   handleDelete = () => {
     const productId = this.props._id;
 
@@ -29,7 +37,7 @@ class Product extends React.Component {
       {
         _id: this.props._id,
         title: this.props.title,
-        quantity: this.props.quantity - 1,
+        quantity: String(this.props.quantity - 1),
         price: this.props.price,
       }
     );
@@ -50,20 +58,24 @@ class Product extends React.Component {
           <p className="price">{this.props.price}</p>
           <p className="quantity">{this.props.quantity} left in stock</p>
 
-          {/* TODO clicking 'edit' button shows the form and hides these two buttons */}
-          <div className="actions product-actions">
-            <a
-              className={`button add-to-cart ${
-                this.props.quantity ? null : "disabled"
-              }`}
-              onClick={this.handleAddToCart}
-            >
-              Add to Cart
-            </a>
-            <a className="button edit" onClick={this.showForm}>
-              Edit
-            </a>
-          </div>
+          {!this.state.editFormOpen && (
+            <div className="actions product-actions">
+              <a
+                className={`button add-to-cart ${
+                  this.props.quantity ? "" : "disabled"
+                }`}
+                onClick={this.handleAddToCart}
+              >
+                Add to Cart
+              </a>
+              <a
+                className="button edit"
+                onClick={() => this.setState({ editFormOpen: true })}
+              >
+                Edit
+              </a>
+            </div>
+          )}
 
           <a className="delete-button" onClick={this.handleDelete}>
             <span>X</span>
@@ -72,10 +84,19 @@ class Product extends React.Component {
 
         {/* TODO show/hide edit form based on state.editFormOpen */}
         {/* TODO extract to EditForm component? */}
-        <div className="edit-form">
-          <h3>Edit Product</h3>
-          <Form onSubmit={this.props.onEdit} type={"Update"} {...this.props} />
-        </div>
+
+        {this.state.editFormOpen && (
+          <div className="edit-form">
+            <h3>Edit Product</h3>
+            <Form
+              // onSubmit={this.props.onEdit}
+              onCancel={this.handleCancel}
+              hideForm={this.hideForm}
+              type={"Update"}
+              {...this.props}
+            />
+          </div>
+        )}
       </div>
     );
   }

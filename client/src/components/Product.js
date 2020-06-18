@@ -1,20 +1,45 @@
 import React from "react";
-// DONE import Form
 import Form from "./Form.js";
+import store from "../lib/store.js";
+import axios from "axios";
 
 class Product extends React.Component {
   state = {
     editFormOpen: false,
   };
 
-  // TODO implement showForm method
-
   handleDelete = () => {
-    this.props.onDelete(this.props._id);
+    const productId = this.props._id;
+
+    axios.delete(`/api/products/${productId}`).then((_) => {
+      store.dispatch({
+        type: "PRODUCT_DELETED",
+        payload: { productId },
+      });
+    });
   };
 
   handleAddToCart = () => {
-    this.props.onAddToCart(this.props._id);
+    if (this.props.quantity <= 0) {
+      return;
+    }
+
+    const data = Object.assign(
+      {},
+      {
+        _id: this.props._id,
+        title: this.props.title,
+        quantity: this.props.quantity - 1,
+        price: this.props.price,
+      }
+    );
+
+    axios.put(`/api/products/${this.props._id}`, data).then(({ data }) => {
+      store.dispatch({
+        type: "PRODUCT_ADDED_TO_CART",
+        payload: { product: data },
+      });
+    });
   };
 
   render() {
@@ -49,13 +74,7 @@ class Product extends React.Component {
         {/* TODO extract to EditForm component? */}
         <div className="edit-form">
           <h3>Edit Product</h3>
-
-          <Form
-            onSubmit={this.props.onEdit}
-            type={"Update"}
-            // DONE pass in current Product values
-            {...this.props}
-          />
+          <Form onSubmit={this.props.onEdit} type={"Update"} {...this.props} />
         </div>
       </div>
     );

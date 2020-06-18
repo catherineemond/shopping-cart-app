@@ -1,41 +1,75 @@
 import React from "react";
+import store from "../lib/store.js";
+import axios from "axios";
 
 class Form extends React.Component {
-  // DONE populate form fields with Product props
   state = {
     title: this.props.title || "",
     price: this.props.price || "",
     quantity: this.props.quantity || "",
   };
 
-  // DONE moved from AddForm
   handleOnChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
 
-  // DONE moved from AddForm
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    // TODO pass in 'props.type' to generic 'onSubmit' method
-    // and push logic up to App.js
-
-    this.props.onSubmit(
-      {
-        title: this.state.title,
-        price: this.state.price,
-        quantity: this.state.quantity,
-      },
-      this.props._id
-    );
-
+  reset = () => {
     this.setState({
       title: "",
       price: "",
       quantity: "",
     });
+  };
+
+  handleAdd = (data) => {
+    fetch("/api/products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((product) => {
+        store.dispatch({
+          type: "PRODUCT_ADDED",
+          payload: { product },
+        });
+      });
+  };
+
+  handleEdit = (data) => {
+    if (data.quantity < 0) {
+      return;
+    }
+
+    const productId = this.props._id;
+
+    axios.put(`/api/products/${productId}`, data).then(({ data }) => {
+      store.dispatch({
+        type: "PRODUCT_UPDATED",
+        payload: { product: data },
+      });
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const data = {
+      title: this.state.title,
+      price: this.state.price,
+      quantity: this.state.quantity,
+    };
+
+    if (this.props.type === "Add") {
+      this.handleAdd(data);
+      this.reset();
+    } else if (this.props.type === "Update") {
+      this.handleEdit(data);
+    }
   };
 
   render() {

@@ -1,7 +1,8 @@
 import React from "react";
-import Cart from "./Cart.js";
+import CartContainer from "./CartContainer.js";
 import ProductList from "./ProductList.js";
 import AddForm from "./AddForm.js";
+import ProductListContainer from './ProductListContainer.js'
 
 class App extends React.Component {
   render() {
@@ -9,12 +10,11 @@ class App extends React.Component {
       <div id="app">
         <header>
           <h1>The Shop!</h1>
-          <Cart />
+          <CartContainer />
         </header>
         <main>
-          <ProductList />
+          <ProductListContainer ><ProductList /></ProductListContainer>
           <AddForm
-          // isOpen={false}
           />
         </main>
       </div>

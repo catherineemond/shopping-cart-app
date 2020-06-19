@@ -1,5 +1,6 @@
 import React from "react";
 import Form from "./Form.js";
+import FormContainer from './FormContainer.js'
 
 class AddForm extends React.Component {
   // TODO initialize state for form to be hidden
@@ -29,12 +30,7 @@ class AddForm extends React.Component {
           </a>
         </p>
         <h3>Add Product</h3>
-        <Form
-          onSubmit={this.props.onAddProduct}
-          onCancel={this.handleCancel}
-          hideForm={this.hideForm}
-          type={"Add"}
-        />
+        <FormContainer type={"Add"} onCancel={this.handleCancel} hideForm={this.hideForm}/>
       </div>
     );
   }

@@ -1,6 +1,4 @@
 import React from "react";
-import store from "../lib/store.js";
-import axios from "axios";
 
 class Form extends React.Component {
   state = {
@@ -29,55 +27,32 @@ class Form extends React.Component {
     });
   };
 
-  handleAdd = (data) => {
-    fetch("/api/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((product) => {
-        store.dispatch({
-          type: "PRODUCT_ADDED",
-          payload: { product },
-        });
-      });
-  };
-
-  handleEdit = (data) => {
-    if (data.quantity < 0) {
-      return;
-    }
-
-    const productId = this.props._id;
-
-    axios.put(`/api/products/${productId}`, data).then(({ data }) => {
-      store.dispatch({
-        type: "PRODUCT_UPDATED",
-        payload: { product: data },
-      });
-    });
-  };
-
   handleSubmit = (e) => {
     e.preventDefault();
-
+    
     const data = {
       title: this.state.title,
       price: this.state.price,
       quantity: this.state.quantity,
     };
+    if (this.props.type === 'Add') {
+      this.props.onSubmit(data, () => {
+        this.reset();
+        this.props.hideForm();
+      })} else if (this.props.type === 'Update') {
+        this.props.onSubmit(data, () => {
+          this.props.hideForm(); 
+        })
+      }
+    
+    // if (true) {//(this.props.type === "Add") {
+    //   this.handleAdd(data);
+    //   this.reset();
+    // } else if (this.props.type === "Update") {
+    //   this.handleEdit(data);
+    // }
 
-    if (this.props.type === "Add") {
-      this.handleAdd(data);
-      this.reset();
-    } else if (this.props.type === "Update") {
-      this.handleEdit(data);
-    }
-
-    this.props.hideForm();
+    // // this.props.hideForm();
   };
 
   render() {

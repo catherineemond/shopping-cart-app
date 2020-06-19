@@ -1,7 +1,5 @@
 import React from "react";
-import Form from "./Form.js";
-import store from "../lib/store.js";
-import axios from "axios";
+import FormContainer from './FormContainer.js'
 
 class Product extends React.Component {
   state = {
@@ -17,14 +15,7 @@ class Product extends React.Component {
   };
 
   handleDelete = () => {
-    const productId = this.props._id;
-
-    axios.delete(`/api/products/${productId}`).then((_) => {
-      store.dispatch({
-        type: "PRODUCT_DELETED",
-        payload: { productId },
-      });
-    });
+    this.props.onDelete()
   };
 
   handleAddToCart = () => {
@@ -42,12 +33,7 @@ class Product extends React.Component {
       }
     );
 
-    axios.put(`/api/products/${this.props._id}`, data).then(({ data }) => {
-      store.dispatch({
-        type: "PRODUCT_ADDED_TO_CART",
-        payload: { product: data },
-      });
-    });
+    this.props.onAddToCart(data)
   };
 
   render() {
@@ -88,13 +74,8 @@ class Product extends React.Component {
         {this.state.editFormOpen && (
           <div className="edit-form">
             <h3>Edit Product</h3>
-            <Form
-              // onSubmit={this.props.onEdit}
-              onCancel={this.handleCancel}
-              hideForm={this.hideForm}
-              type={"Update"}
-              {...this.props}
-            />
+            <FormContainer type={"Update"} {...this.props} onCancel={this.handleCancel} hideForm={this.hideForm} />
+            
           </div>
         )}
       </div>

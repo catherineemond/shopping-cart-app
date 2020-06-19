@@ -1,16 +1,9 @@
 import React from "react";
 import CartTable from "./CartTable.js";
-import store from "../lib/store.js";
 
 class Cart extends React.Component {
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => this.forceUpdate());
-  }
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
   render() {
-    if (store.getState().cartItems.length === 0) {
+    if (this.props.cartItems.length === 0) {
       return (
         <div className="cart">
           <h2>Your Cart</h2>
@@ -23,7 +16,7 @@ class Cart extends React.Component {
       return (
         <div class="cart">
           <h2>Your Cart</h2>
-          <CartTable cartItems={store.getState().cartItems} />
+          <CartTable cartItems={this.props.cartItems} />
           <a class="button checkout">Checkout</a>
         </div>
       );

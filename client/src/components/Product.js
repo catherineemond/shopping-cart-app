@@ -1,5 +1,5 @@
 import React from "react";
-import FormContainer from './FormContainer.js'
+import FormContainer from "./FormContainer.js";
 
 class Product extends React.Component {
   state = {
@@ -15,7 +15,7 @@ class Product extends React.Component {
   };
 
   handleDelete = () => {
-    this.props.onDelete()
+    this.props.onDelete();
   };
 
   handleAddToCart = () => {
@@ -33,7 +33,7 @@ class Product extends React.Component {
       }
     );
 
-    this.props.onAddToCart(data)
+    this.props.onAddToCart(data);
   };
 
   render() {
@@ -74,8 +74,12 @@ class Product extends React.Component {
         {this.state.editFormOpen && (
           <div className="edit-form">
             <h3>Edit Product</h3>
-            <FormContainer type={"Update"} {...this.props} onCancel={this.handleCancel} hideForm={this.hideForm} />
-            
+            <FormContainer
+              type={"Update"}
+              {...this.props}
+              onCancel={this.handleCancel}
+              hideForm={this.hideForm}
+            />
           </div>
         )}
       </div>

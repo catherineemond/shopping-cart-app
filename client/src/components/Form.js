@@ -29,30 +29,22 @@ class Form extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const data = {
       title: this.state.title,
       price: this.state.price,
       quantity: this.state.quantity,
     };
-    if (this.props.type === 'Add') {
+    if (this.props.type === "Add") {
       this.props.onSubmit(data, () => {
         this.reset();
         this.props.hideForm();
-      })} else if (this.props.type === 'Update') {
-        this.props.onSubmit(data, () => {
-          this.props.hideForm(); 
-        })
-      }
-    
-    // if (true) {//(this.props.type === "Add") {
-    //   this.handleAdd(data);
-    //   this.reset();
-    // } else if (this.props.type === "Update") {
-    //   this.handleEdit(data);
-    // }
-
-    // // this.props.hideForm();
+      });
+    } else if (this.props.type === "Update") {
+      this.props.onSubmit(data, () => {
+        this.props.hideForm();
+      });
+    }
   };
 
   render() {

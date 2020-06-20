@@ -1,6 +1,6 @@
-import { connect } from 'react-redux'
-import Form from './Form.js'
-import axios from 'axios'
+import { connect } from "react-redux";
+import Form from "./Form.js";
+import axios from "axios";
 
 const editHelper = (dispatch, data, id, cb) => {
   if (data.quantity < 0) {
@@ -14,9 +14,9 @@ const editHelper = (dispatch, data, id, cb) => {
       type: "PRODUCT_UPDATED",
       payload: { product: data },
     });
-    cb(); 
+    cb();
   });
-}
+};
 
 const addHelper = (dispatch, data, cb) => {
   fetch("/api/products", {
@@ -28,13 +28,13 @@ const addHelper = (dispatch, data, cb) => {
   })
     .then((response) => response.json())
     .then((product) => {
-       dispatch({
+      dispatch({
         type: "PRODUCT_ADDED",
         payload: { product },
       });
-      cb()
+      cb();
     });
-}
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
@@ -44,8 +44,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       } else if (ownProps.type === "Update") {
         editHelper(dispatch, data, ownProps._id, cb);
       }
-    }
-  }
-}
+    },
+  };
+};
 
-export default connect(null, mapDispatchToProps)(Form)
+export default connect(null, mapDispatchToProps)(Form);

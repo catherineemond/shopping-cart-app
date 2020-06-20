@@ -2,7 +2,7 @@ import React from "react";
 import CartContainer from "./CartContainer.js";
 import ProductList from "./ProductList.js";
 import AddForm from "./AddForm.js";
-import ProductListContainer from './ProductListContainer.js'
+import ProductListContainer from "./ProductListContainer.js";
 
 class App extends React.Component {
   render() {
@@ -13,9 +13,10 @@ class App extends React.Component {
           <CartContainer />
         </header>
         <main>
-          <ProductListContainer ><ProductList /></ProductListContainer>
-          <AddForm
-          />
+          <ProductListContainer>
+            <ProductList />
+          </ProductListContainer>
+          <AddForm />
         </main>
       </div>
     );

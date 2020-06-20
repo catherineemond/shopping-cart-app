@@ -1,6 +1,6 @@
-import { connect } from 'react-redux'
-import Product from './Product.js'
-import axios from 'axios'
+import { connect } from "react-redux";
+import Product from "./Product.js";
+import axios from "axios";
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
@@ -19,8 +19,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           payload: { product: data },
         });
       });
-    }
-  }
-}
+    },
+  };
+};
 
-export default connect(null, mapDispatchToProps)(Product)
+export default connect(null, mapDispatchToProps)(Product);

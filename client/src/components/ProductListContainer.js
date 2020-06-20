@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import ProductList from "./ProductList.js";
+import axios from "axios";
 
 const mapStateToProps = (state) => {
   return {
@@ -10,8 +11,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onFetchProducts: () => {
-      fetch("/api/products")
-        .then((response) => response.json())
+      axios
+        .get("/api/products")
+        .then((response) => response.data)
         .then((products) =>
           dispatch({
             type: "PRODUCTS_FETCHED",

@@ -19,14 +19,9 @@ const editHelper = (dispatch, data, id, cb) => {
 };
 
 const addHelper = (dispatch, data, cb) => {
-  fetch("/api/products", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
+  axios
+    .post("/api/products", data)
+    .then((response) => response.data)
     .then((product) => {
       dispatch({
         type: "PRODUCT_ADDED",

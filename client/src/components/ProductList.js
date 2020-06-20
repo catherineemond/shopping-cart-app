@@ -1,9 +1,9 @@
 import React from "react";
-import ProductContainer from "./ProductContainer.js"
+import ProductContainer from "./ProductContainer.js";
 
 class ProductList extends React.Component {
   componentDidMount() {
-    this.props.onFetchProducts()
+    this.props.onFetchProducts();
   }
 
   render() {
